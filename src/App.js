@@ -1,8 +1,10 @@
-import AcidentForm from "./pages/AcidentForm";
+import AccidentForm from './pages/AccidentForm';
 
 function App() {
   return (
-    <AcidentForm />
+    <>
+      <AccidentForm />
+    </>
   );
 }
 
