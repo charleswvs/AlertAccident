@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-alertaccident-dev-211451-authRole",
+      "UnauthRoleArn": "arn:aws:iam::808809474730:role/amplify-alertaccident-dev-211451-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::808809474730:role/amplify-alertaccident-dev-211451-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-alertaccident-dev-211451-deployment",
+      "UnauthRoleName": "amplify-alertaccident-dev-211451-unauthRole",
+      "StackName": "amplify-alertaccident-dev-211451",
+      "StackId": "arn:aws:cloudformation:us-east-1:808809474730:stack/amplify-alertaccident-dev-211451/e35fa120-4996-11ec-8e3d-12837160993b",
+      "AmplifyAppId": "d2kqln2w3t4a4i"
+    },
+    "categories": {
+      "auth": {
+        "alertaccidentf7a5248c": {}
+      }
+    }
+  }
+}
