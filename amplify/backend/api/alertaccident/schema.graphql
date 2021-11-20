@@ -1,9 +1,3 @@
-type Todo @model {
-  id: ID!
-  name: String!
-  description: String
-}
-
 type Event @model {
   id: ID!
   date: String!
@@ -11,4 +5,5 @@ type Event @model {
   longitude: Float!
   file: String
   description: String
+  title: String!
 }

@@ -4,14 +4,22 @@ import Header from '../../components/Header';
 import Input from '../../components/Input';
 import TextArea from '../../components/TextArea';
 import { Container, Form } from './style';
+import { useGeolocation } from 'react-use';
+import { createEvent, uploadFile } from '../../services/api';
 
 const AccidentForm = () => {
+  const geolocation = useGeolocation({
+    enableHighAccuracy: true,
+  });
+
   const [accidentInfos, setAccidentInfos] = useState({
     title: '',
     description: '',
-    file: '',
-    localization: ''
-  })
+    file: undefined,
+    latitude: 0,
+    longitude: 0,
+  });
+  const [loading, setLoading] = useState(false);
 
   const updateAccidentInfos = (proptype, value) => {
     setAccidentInfos(prevState => ({
@@ -20,18 +28,32 @@ const AccidentForm = () => {
     }))
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  }
-
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=>{
-        updateAccidentInfos('localization', `${position.coords.latitude},${position.coords.longitude}`)});
-    } else {
-      alert('ok')
-    }
-  }, [])
+    setAccidentInfos((prevState) => ({
+      ...prevState,
+      latitude: geolocation.latitude || prevState.latitude,
+      longitude: geolocation.longitude || prevState.longitude,
+    }))
+  },[geolocation])
+
+  const handleSubmit = async (event) => {
+    setLoading(true);
+    event.preventDefault();
+
+    const fileKey = await uploadFile(accidentInfos.file);
+
+    await createEvent({
+      ...accidentInfos,
+      date: new Date().toString(),
+      file: fileKey,
+    }).then(() => {
+      alert('Deu bom')
+    }).catch((err) => {
+      console.log(err);
+      alert('Deu ruim')
+    });
+    setLoading(false);
+  }
 
   return (
     <Container>
@@ -43,25 +65,24 @@ const AccidentForm = () => {
           label="Nome do evento"
           marginBottom="1.5rem"
           value={accidentInfos.title}
-          onChange={value => updateAccidentInfos('title', value)}
+          onChange={e => updateAccidentInfos('title', e.target.value)}
         />
         <TextArea
           id="description"
           placeholder="Ex.: Batida entre dois carros, com duas pessoas feridas"
           label="Detalhes do acidente"
           value={accidentInfos.description}
-          onChange={value => updateAccidentInfos('description', value)}
+          onChange={e => updateAccidentInfos('description', e.target.valu)}
         />
-        <img id='teste' src={`https://maps.googleapis.com/maps/api/staticmap?center=${accidentInfos.localization}&zoom=14&size=400x300&sensor=false`} alt=''/>
         <Input 
           id="file"
           type="file" 
           label="Foto ou vídeo"
-          value={accidentInfos.file}
-          onChange={value => updateAccidentInfos('file', value)}
+          onChange={e => updateAccidentInfos('file', e.target.value[0])}
         />
+        {loading && <span>Enviando arquivo...</span>}
 
-        <Button type="submit">Salvar</Button>
+        <Button type="submit" disabled={loading}>Salvar</Button>
       </Form>
     </Container>
   );
