@@ -1,9 +1,9 @@
 import { TextAreaStyled } from "./style";
 
-const TextArea = ({label, ...rest}) => 
+const TextArea = ({label, id, ...rest}) => 
     <>
-        {label && <label style={{fontSize: '14px'}}>{label}</label>}
-        <TextAreaStyled  {...rest}/>
+        {label && <label id={id} style={{fontSize: '14px'}}>{label}</label>}
+        <TextAreaStyled id={id}  {...rest}/>
     </>
 
 export default TextArea;
