@@ -1,11 +1,7 @@
-import AccidentForm from './pages/AccidentForm';
+import Router from './Router/router';
 
 function App() {
-  return (
-    <>
-      <AccidentForm />
-    </>
-  );
+  return <Router />;
 }
 
 export default App;

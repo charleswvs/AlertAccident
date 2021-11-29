@@ -9,9 +9,11 @@ export const Container = styled.main`
 export const Form = styled.form`
   margin-left: auto;
   margin-right: auto;
-  margin-top: 6rem;
-  max-width: 310px;
+  padding-top: 10%;
+  max-width: 320px;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;

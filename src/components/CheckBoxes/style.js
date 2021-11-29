@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
-    display: flex;
-    margin-bottom: 20px;
+  display: flex;
+  margin-bottom: 20px;
 `;
 
 export const InputRadio = styled.div`
@@ -26,4 +26,4 @@ export const InputRadio = styled.div`
         width: 16px;    
         border-radius:4px;
     }
-`; 
+`;

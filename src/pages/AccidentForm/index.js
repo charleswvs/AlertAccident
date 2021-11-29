@@ -15,10 +15,12 @@ const AccidentForm = () => {
           label="Nome do evento"
           marginBottom="1.5rem"
         />
+
         <TextArea
           placeholder="Ex.: Batida entre dois carros, com duas pessoas feridas"
           label="Detalhes do acidente"
         />
+
         <Checkboxes />
         <Input type="file" />
 
