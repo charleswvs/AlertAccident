@@ -1,30 +1,95 @@
+import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
-import Checkboxes from '../../components/CheckBoxes';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import TextArea from '../../components/TextArea';
 import { Container, Form } from './style';
+import { useGeolocation } from 'react-use';
+import { createEvent, uploadFile } from '../../services/api';
 
 const AccidentForm = () => {
+  const geolocation = useGeolocation({
+    enableHighAccuracy: true,
+  });
+
+  const [accidentInfos, setAccidentInfos] = useState({
+    title: '',
+    description: '',
+    file: undefined,
+    latitude: 0,
+    longitude: 0,
+  });
+  const [loading, setLoading] = useState(false);
+
+  const updateAccidentInfos = (proptype, value) => {
+    setAccidentInfos((prevState) => ({
+      ...prevState,
+      [proptype]: value,
+    }));
+  };
+
+  useEffect(() => {
+    setAccidentInfos((prevState) => ({
+      ...prevState,
+      latitude: geolocation.latitude || prevState.latitude,
+      longitude: geolocation.longitude || prevState.longitude,
+    }));
+  }, [geolocation]);
+
+  const handleSubmit = async (event) => {
+    setLoading(true);
+    event.preventDefault();
+
+    const fileKey = await uploadFile(accidentInfos.file);
+
+    await createEvent({
+      ...accidentInfos,
+      date: new Date().toString(),
+      file: fileKey,
+    })
+      .then(() => {
+        alert('Deu bom');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Deu ruim');
+      });
+    setLoading(false);
+  };
+
   return (
     <Container>
       <Header />
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Input
+          id="title"
           placeholder="Ex.: Acidente de carro"
           label="Nome do evento"
           marginBottom="1.5rem"
+          value={accidentInfos.title}
+          onChange={(e) => updateAccidentInfos('title', e.target.value)}
         />
 
         <TextArea
+          id="description"
           placeholder="Ex.: Batida entre dois carros, com duas pessoas feridas"
           label="Detalhes do acidente"
+          value={accidentInfos.description}
+          onChange={(e) => updateAccidentInfos('description', e.target.valu)}
         />
 
-        <Checkboxes />
-        <Input type="file" />
+        <Input
+          id="file"
+          type="file"
+          label="Foto ou vídeo"
+          onChange={(e) => updateAccidentInfos('file', e.target.value[0])}
+        />
 
-        <Button type="submit">Salvar</Button>
+        {loading && <span>Enviando arquivo...</span>}
+
+        <Button type="submit" disabled={loading}>
+          Salvar
+        </Button>
       </Form>
     </Container>
   );

@@ -1,0 +1,9 @@
+type Event @model {
+  id: ID!
+  date: String!
+  latitude: Float!
+  longitude: Float!
+  file: String
+  description: String
+  title: String!
+}

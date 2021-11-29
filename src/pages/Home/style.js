@@ -11,6 +11,7 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url(${image});
+  gap: 20px;
 `;
 
 export const Title = styled.label`
