@@ -22,6 +22,7 @@ const AccidentForm = () => {
     latitude: 0,
     longitude: 0,
   });
+
   const [loading, setLoading] = useState(false);
 
   const updateAccidentInfos = (proptype, value) => {
@@ -50,13 +51,12 @@ const AccidentForm = () => {
       date: new Date().toString(),
       file: fileKey,
     })
-      .then(() => {
-        alert('Deu bom');
-        navigate('/visualizar-acidente');
+      .then((result) => {
+        navigate(`../sucesso/${result.data.createEvent.id}`);
       })
       .catch((err) => {
         console.log(err);
-        alert('Deu ruim');
+        alert('Erro ao salvar o acidente');
       });
     setLoading(false);
   };
