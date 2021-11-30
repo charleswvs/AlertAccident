@@ -26,6 +26,7 @@ const AccidentForm = () => {
   const [loading, setLoading] = useState(false);
 
   const updateAccidentInfos = (proptype, value) => {
+    console.log(proptype, value)
     setAccidentInfos((prevState) => ({
       ...prevState,
       [proptype]: value,
@@ -41,17 +42,22 @@ const AccidentForm = () => {
   }, [geolocation]);
 
   const handleSubmit = async (event) => {
-    setLoading(true);
     event.preventDefault();
+    if(!accidentInfos.file){
+      alert('Adicione um arquivo');
+      return 
+    } 
+    setLoading(true);
 
-    const fileKey = await uploadFile(accidentInfos.file);
-
+    const fileKey = await uploadFile({file: accidentInfos.file});
+    console.log(fileKey);
     await createEvent({
       ...accidentInfos,
       date: new Date().toString(),
       file: fileKey,
     })
       .then((result) => {
+        console.log(result);
         navigate(`../sucesso/${result.data.createEvent.id}`);
       })
       .catch((err) => {
@@ -79,14 +85,17 @@ const AccidentForm = () => {
           placeholder="Ex.: Batida entre dois carros, com duas pessoas feridas"
           label="Detalhes do acidente"
           value={accidentInfos.description}
-          onChange={(e) => updateAccidentInfos('description', e.target.valu)}
+          onChange={(e) => updateAccidentInfos('description', e.target.value)}
         />
 
         <Input
           id="file"
           type="file"
           label="Foto ou vídeo"
-          onChange={(e) => updateAccidentInfos('file', e.target.value[0])}
+          onChange={(e) => {
+            console.log(e.target.files[0])
+            updateAccidentInfos('file', e.target.files[0])
+          }}
         />
 
         {loading && <span>Enviando arquivo...</span>}

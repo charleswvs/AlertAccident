@@ -2,6 +2,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify'
 import * as GraphQLMutation from '../graphql/mutations'
 import * as GraphQLQuery from '../graphql/queries'
 import lodash from 'lodash';
+import {uuid} from 'uuidv4';
 
 export const createEvent = async ({
   title,
@@ -24,12 +25,27 @@ export const createEvent = async ({
 };
 
 export const uploadFile = async ({ file }) => {
-  const key = lodash.uniqueId();
-  await Storage.put(`${key}`, file);
+  const extension = file.name.substring(file.name.lastIndexOf('.') + 1);
+  const key = `${uuid()}.${extension}`;
+  const response = await Storage.put(key, file, {
+    level: 'public',
+  });
+  console.log(response)
   return key;
+}
+
+export const getFile = async (key) => {
+  return Storage.get(key);
 }
 
 export const getEvent = async (id) => {
   const event = await API.graphql(graphqlOperation(GraphQLQuery.getEvent, { id }));
+  console.log(event)
   return event.data.getEvent
+}
+
+export const getAllEvents = async () => {
+  const events = await API.graphql(graphqlOperation(GraphQLQuery.listEvents, { limit: 100 }));
+  console.log(events)
+  return events
 }

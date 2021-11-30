@@ -38,4 +38,7 @@ export const TextContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-bottom: 35px;
+  .leaflet-container {
+    height: 200px;
+  }
 `;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { useParams } from 'react-router-dom';
-import { getEvent } from '../../graphql/queries';
 import {
   Container,
   Title,
@@ -9,31 +8,39 @@ import {
   RecordContainer,
   TextContainer,
 } from './style';
+import { getAllEvents, getEvent, getFile } from '../../services/api';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const ViewAccidentRecord = () => {
   const { id } = useParams();
+
+  const [eventName, setEventName] = useState('Acidente de carro');
+  const [eventDetails, setEventDetails] = useState()
+  const [eventLocation, setEventLocation] = useState();
+  const [eventRecord, setEventRecord] = useState();
+  const [eventFile, setEventFile] = useState();
 
   useEffect(() => {
     getEventData();
   }, []);
 
-  const getEventData = () => {
+  const getEventData = async () => {
     try {
-      const data = getEvent(id);
-      console.log(data);
+      const event = await getEvent(id)
+      const file = await getFile(event.file);
+      setEventFile(file);
+      setEventLocation({
+        latitude: event.latitude,
+        longitude: event.longitude,
+      })
+      setEventName(event.title);
+      setEventDetails(event.description);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const [eventName, setEventName] = useState('Acidente de carro');
-  const [eventDetails, setEventDetails] = useState(
-    'Batida entre dois carros, com duas pessas feridas'
-  );
-  const [eventLocation, setEventLocation] = useState(
-    'Br 040 Km 688, Ceasa-Pav F Box 40, Kennedy, Contagem-MG - Kennedy, Contagem - MG'
-  );
-  const [eventRecord, setEventRecord] = useState();
+
 
   return (
     <>
@@ -53,7 +60,7 @@ const ViewAccidentRecord = () => {
           <Title>Foto ou vídeo:</Title>
           <RecordContainer>
             <img
-              src="https://defatoonline.com.br/wp-content/uploads/2021/11/WhatsApp-Image-2021-11-16-at-10.15.49-780x520.jpeg"
+              src={eventFile}
               alt="eventName"
             />
           </RecordContainer>
@@ -61,8 +68,25 @@ const ViewAccidentRecord = () => {
 
         <TextContainer>
           <Title>Local:</Title>
-
-          <Description>{eventLocation}</Description>
+        {eventLocation && (
+          <MapContainer 
+            style={{height: 200}} 
+            center={[eventLocation.latitude, eventLocation.longitude]} 
+            zoom={13} 
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[eventLocation.latitude, eventLocation.longitude]}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
+        )}
+        
         </TextContainer>
       </Container>
     </>
