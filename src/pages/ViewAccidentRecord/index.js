@@ -8,7 +8,7 @@ import {
   RecordContainer,
   TextContainer,
 } from './style';
-import { getAllEvents, getEvent, getFile } from '../../services/api';
+import { getEvent, getFile } from '../../services/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const ViewAccidentRecord = () => {
@@ -17,11 +17,11 @@ const ViewAccidentRecord = () => {
   const [eventName, setEventName] = useState('Acidente de carro');
   const [eventDetails, setEventDetails] = useState()
   const [eventLocation, setEventLocation] = useState();
-  const [eventRecord, setEventRecord] = useState();
   const [eventFile, setEventFile] = useState();
 
   useEffect(() => {
     getEventData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getEventData = async () => {

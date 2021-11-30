@@ -30,7 +30,6 @@ export const uploadFile = async ({ file }) => {
   const response = await Storage.put(key, file, {
     level: 'public',
   });
-  console.log(response)
   return key;
 }
 
@@ -40,12 +39,10 @@ export const getFile = async (key) => {
 
 export const getEvent = async (id) => {
   const event = await API.graphql(graphqlOperation(GraphQLQuery.getEvent, { id }));
-  console.log(event)
   return event.data.getEvent
 }
 
 export const getAllEvents = async () => {
   const events = await API.graphql(graphqlOperation(GraphQLQuery.listEvents, { limit: 100 }));
-  console.log(events)
   return events
 }
