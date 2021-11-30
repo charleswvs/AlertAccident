@@ -47,17 +47,17 @@ const AccidentForm = () => {
       date: new Date().toString(),
       file: fileKey,
     }).then(() => {
-      alert('Deu bom')
+      alert('Acidente salvo com sucesso!');
     }).catch((err) => {
       console.log(err);
-      alert('Deu ruim')
+      alert('Erro ao salvar o acidente')
     });
     setLoading(false);
   }
 
   return (
     <Container>
-      <Header />
+      <Header title="Registrar acidente" />
       <Form onSubmit={handleSubmit}>
         <Input
           id="title"
@@ -78,7 +78,7 @@ const AccidentForm = () => {
           id="file"
           type="file" 
           label="Foto ou vídeo"
-          onChange={e => updateAccidentInfos('file', e.target.value[0])}
+          onChange={e => {console.log('teste',e.target.value[0].name); updateAccidentInfos('file', e.target.value[0])}}
         />
         {loading && <span>Enviando arquivo...</span>}
 

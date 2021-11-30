@@ -1,12 +1,12 @@
 import { HeaderContainer } from './style';
 import Icon from '../../assets/icon.png';
 
-const Header = () => {
+const Header = ({ title }) => {
 
     return(
         <HeaderContainer>
             <img src={Icon} alt="Icon" />
-            <h1>Registrar Acidente</h1>
+            <h1>{title}</h1>
         </HeaderContainer>
     );
 }
