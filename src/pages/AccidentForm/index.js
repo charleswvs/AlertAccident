@@ -6,8 +6,11 @@ import TextArea from '../../components/TextArea';
 import { Container, Form } from './style';
 import { useGeolocation } from 'react-use';
 import { createEvent, uploadFile } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const AccidentForm = () => {
+  const navigate = useNavigate();
+
   const geolocation = useGeolocation({
     enableHighAccuracy: true,
   });
@@ -49,6 +52,7 @@ const AccidentForm = () => {
     })
       .then(() => {
         alert('Deu bom');
+        navigate('/visualizar-acidente');
       })
       .catch((err) => {
         console.log(err);
@@ -59,7 +63,7 @@ const AccidentForm = () => {
 
   return (
     <Container>
-      <Header />
+      <Header>Registrar Acidente</Header>
       <Form onSubmit={handleSubmit}>
         <Input
           id="title"

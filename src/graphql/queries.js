@@ -16,6 +16,7 @@ export const getEvent = /* GraphQL */ `
     }
   }
 `;
+
 export const listEvents = /* GraphQL */ `
   query ListEvents(
     $filter: ModelEventFilterInput
