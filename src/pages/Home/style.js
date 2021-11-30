@@ -15,10 +15,10 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.label`
-  margin-top: 10%;
+  margin-top: 50px;
   font-size: 40px;
 `;
 
 export const ButtonContent = styled.div`
-  margin-bottom: 30%;
+  margin-bottom: 100px;
 `;

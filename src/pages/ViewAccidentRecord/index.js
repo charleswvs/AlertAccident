@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../components/Header';
+import { useParams } from 'react-router-dom';
+import { getEvent } from '../../graphql/queries';
 import {
   Container,
   Title,
@@ -9,6 +11,21 @@ import {
 } from './style';
 
 const ViewAccidentRecord = () => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    getEventData();
+  }, []);
+
+  const getEventData = () => {
+    try {
+      const data = getEvent(id);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const [eventName, setEventName] = useState('Acidente de carro');
   const [eventDetails, setEventDetails] = useState(
     'Batida entre dois carros, com duas pessas feridas'
