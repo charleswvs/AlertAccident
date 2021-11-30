@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import AccidentForm from '../pages/AccidentForm';
 import ViewAccidentRecord from '../pages/ViewAccidentRecord';
 import SuccessScreen from '../pages/SuccessScreen';
+import Report from '../pages/Report';
 
 const Router = () => (
   <BrowserRouter>
@@ -12,6 +13,7 @@ const Router = () => (
       <Route path="/cadastrar-acidente" element={<AccidentForm />} />
       <Route path="/visualizar-acidente/:id" element={<ViewAccidentRecord />} />
       <Route path="/sucesso/:id" element={<SuccessScreen />} />
+      <Route path="/report" element={<Report />} />
     </Routes>
   </BrowserRouter>
 );

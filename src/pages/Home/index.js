@@ -1,20 +1,29 @@
-import Button from '../../components/Button';
-import { useNavigate } from 'react-router-dom';
-import { Container, Title, ButtonContent } from './style';
+import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import { Container, Title, ButtonContent, ButtonContainer } from "./style";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleChangePage = () => {
-    navigate('/cadastrar-acidente');
+    navigate("/cadastrar-acidente");
+  };
+
+  const handleChangePageToRelatorio = () => {
+    navigate("/report");
   };
 
   return (
     <Container>
       <Title>Alerta acidente</Title>
-      <ButtonContent onClick={() => handleChangePage()}>
-        <Button>Reportar</Button>
-      </ButtonContent>
+      <ButtonContainer>
+        <ButtonContent onClick={() => handleChangePage()}>
+          <Button>Reportar</Button>
+        </ButtonContent>
+        <ButtonContent onClick={() => handleChangePageToRelatorio()}>
+          <Button>Relatório</Button>
+        </ButtonContent>
+      </ButtonContainer>
     </Container>
   );
 };

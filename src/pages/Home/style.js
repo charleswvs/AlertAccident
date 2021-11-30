@@ -6,12 +6,10 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-between;
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url(${image});
-  gap: 20px;
 `;
 
 export const Title = styled.label`
@@ -20,5 +18,9 @@ export const Title = styled.label`
 `;
 
 export const ButtonContent = styled.div`
-  margin-bottom: 100px;
+`;
+
+export const ButtonContainer = styled.div`
+  margin-top: auto;
+  margin-bottom: auto;
 `;
