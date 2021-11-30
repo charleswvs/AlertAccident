@@ -6,8 +6,10 @@ import TextArea from '../../components/TextArea';
 import { Container, Form } from './style';
 import { useGeolocation } from 'react-use';
 import { createEvent, uploadFile } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const AccidentForm = () => {
+  const navigate = useNavigate();
   const geolocation = useGeolocation({
     enableHighAccuracy: true,
   });
@@ -46,8 +48,8 @@ const AccidentForm = () => {
       ...accidentInfos,
       date: new Date().toString(),
       file: fileKey,
-    }).then(() => {
-      alert('Acidente salvo com sucesso!');
+    }).then(result => {
+      navigate(`../sucesso/${result.data.createEvent.id}`)
     }).catch((err) => {
       console.log(err);
       alert('Erro ao salvar o acidente')
@@ -57,7 +59,7 @@ const AccidentForm = () => {
 
   return (
     <Container>
-      <Header title="Registrar acidente" />
+      <Header title="Registrar Acidente"/>
       <Form onSubmit={handleSubmit}>
         <Input
           id="title"
@@ -84,10 +86,8 @@ const AccidentForm = () => {
         />
 
         {loading && <span>Enviando arquivo...</span>}
-
-        <Button type="submit" disabled={loading}>
-          Salvar
-        </Button>
+        
+        <Button type="submit" disabled={loading}>Salvar</Button>
       </Form>
     </Container>
   );
