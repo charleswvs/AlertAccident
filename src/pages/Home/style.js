@@ -11,13 +11,14 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url(${image});
+  gap: 20px;
 `;
 
 export const Title = styled.label`
-  margin-top: 65px;
-  font-size: 48px;
+  margin-top: 10%;
+  font-size: 40px;
 `;
 
 export const ButtonContent = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30%;
 `;

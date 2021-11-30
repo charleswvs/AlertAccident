@@ -22,19 +22,19 @@ const AccidentForm = () => {
   const [loading, setLoading] = useState(false);
 
   const updateAccidentInfos = (proptype, value) => {
-    setAccidentInfos(prevState => ({
+    setAccidentInfos((prevState) => ({
       ...prevState,
-      [proptype]: value
-    }))
-  }
+      [proptype]: value,
+    }));
+  };
 
   useEffect(() => {
     setAccidentInfos((prevState) => ({
       ...prevState,
       latitude: geolocation.latitude || prevState.latitude,
       longitude: geolocation.longitude || prevState.longitude,
-    }))
-  },[geolocation])
+    }));
+  }, [geolocation]);
 
   const handleSubmit = async (event) => {
     setLoading(true);
@@ -53,7 +53,7 @@ const AccidentForm = () => {
       alert('Erro ao salvar o acidente')
     });
     setLoading(false);
-  }
+  };
 
   return (
     <Container>
@@ -65,24 +65,29 @@ const AccidentForm = () => {
           label="Nome do evento"
           marginBottom="1.5rem"
           value={accidentInfos.title}
-          onChange={e => updateAccidentInfos('title', e.target.value)}
+          onChange={(e) => updateAccidentInfos('title', e.target.value)}
         />
+
         <TextArea
           id="description"
           placeholder="Ex.: Batida entre dois carros, com duas pessoas feridas"
           label="Detalhes do acidente"
           value={accidentInfos.description}
-          onChange={e => updateAccidentInfos('description', e.target.valu)}
+          onChange={(e) => updateAccidentInfos('description', e.target.valu)}
         />
-        <Input 
+
+        <Input
           id="file"
-          type="file" 
+          type="file"
           label="Foto ou vídeo"
-          onChange={e => {console.log('teste',e.target.value[0].name); updateAccidentInfos('file', e.target.value[0])}}
+          onChange={(e) => updateAccidentInfos('file', e.target.value[0])}
         />
+
         {loading && <span>Enviando arquivo...</span>}
 
-        <Button type="submit" disabled={loading}>Salvar</Button>
+        <Button type="submit" disabled={loading}>
+          Salvar
+        </Button>
       </Form>
     </Container>
   );
