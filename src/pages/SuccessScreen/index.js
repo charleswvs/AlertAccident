@@ -8,7 +8,6 @@ const SuccessScreen = () => {
     const { id } = useParams();
     return (
         <Container>
-            {console.log(id)}
             <Header title="Confirmação do cadastro"/>
 
             <TextContainer>
@@ -19,8 +18,8 @@ const SuccessScreen = () => {
             <span>Compartilhar</span>
             <img className="shared" src={SharedIcon} alt="Shared" onClick={()=> navigator.share({
                 title: 'Alerta de acidente',
-                text: "Entre no link e fique por dentro do que aconteceu!",
-                url: `https://master.d2kqln2w3t4a4i.amplifyapp.com/`
+                text: "Alerta de acidente!\nEntre no link e fique por dentro do que aconteceu.\n",
+                url: `https://master.d2kqln2w3t4a4i.amplifyapp.com/visualizar-acidente/${id}`
                 })}/>
         </Container>
     )
