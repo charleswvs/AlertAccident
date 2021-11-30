@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Alerta acidente",
+  "name": "Faça seu registro de acidente.",
   "icons": [
     {
       "src": "favicon.ico",
